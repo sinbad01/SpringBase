@@ -1,4 +1,4 @@
-package com.simba.SpringBase;
+package com.simba.springbase;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

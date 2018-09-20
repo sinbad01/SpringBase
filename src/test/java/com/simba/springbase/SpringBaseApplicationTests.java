@@ -1,4 +1,4 @@
-package com.simba.SpringBase;
+package com.simba.springbase;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
