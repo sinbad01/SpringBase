@@ -1,11 +1,16 @@
 package com.simba.springbase.soundsystem;
 
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.contrib.java.lang.system.StandardOutputStreamLog;
 import org.junit.runner.RunWith;
+import org.junit.contrib.java.lang.system.SystemOutRule;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
 // 使用了Spring的SpringJUnit4ClassRunner， 以便在测试开始的时候自动创建Spring的应用上下文
@@ -17,6 +22,17 @@ import static org.junit.Assert.assertNotNull;
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = CDPlayerConfig.class)
 public class CDPlayerTest {
+
+    @Rule
+    public final SystemOutRule systemOutRule = new SystemOutRule().enableLog();
+
+    @Rule
+    public final StandardOutputStreamLog log = new StandardOutputStreamLog();
+
+
+    @Autowired
+    private MediaPlayer mediaPlayer;
+
     // @Autowired注解， 以便于将CompactDiscbean注入到测试代码之中
     @Autowired
     private CompactDisc cd;
@@ -25,5 +41,18 @@ public class CDPlayerTest {
     @Test
     public void cdShouldNotBeNull() {
         assertNotNull(cd);
+    }
+
+    @Test
+    public void play(){
+        System.out.println("===mediaPlayer.play()===");
+        mediaPlayer.play();
+        System.out.println("===systemOutRule.getLog()===");
+        System.out.println(systemOutRule.getLog());
+
+        System.out.println("===log.getLog()===");
+        System.out.println(log.getLog());
+        assertEquals("Playing Sgt. Pepper's Lonely Hearts Club Band by The Beatles",
+                systemOutRule.getLog());
     }
 }
